@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS competidor (
+    matricula VARCHAR(20) PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    sexo VARCHAR(10) NOT NULL,
+    idade INT NOT NULL
+);

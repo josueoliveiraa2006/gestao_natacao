@@ -51,12 +51,11 @@ A estrutura do banco de dados será composta pelas principais entidades relacion
 | **Categoria**  | Define a categoria na qual o competidor participa, como Máster ou Principiante.                            |
 | **Prova**      | Representa as modalidades ou distâncias disputadas, como 100m livre.                                       |
 | **Árbitro**    | Responsável pela arbitragem das provas.                                                                    |
-| **Inscrição**  | Representa a participação de um competidor em determinada prova e categoria, armazenando também seu tempo. 
- 
-| **Usuário** | Representa os usuários do sistema que podem realizar interações sociais.                    |
-| **Postagem** | Representa uma publicação feita por um usuário.                                         |
-| **Curtida** | Registra quando um usuário curte uma postagem, impedindo que o mesmo usuário curta a mesma postagem mais de uma vez.                                                                           |
-| **Comentário** | Registra comentários feitos pelos usuários em uma postagem, armazenando o texto e a data/hora. |
+| **Inscrição**  | Representa a participação de um competidor em determinada prova e categoria, armazenando também seu tempo. |
+| **Usuário** | Representa os usuários do sistema que podem realizar interações sociais.                                      |
+| **Postagem** | Representa uma publicação feita por um usuário.                                                              |
+| **Curtida** |Registra quando um usuário curte uma postagem, impedindo que o mesmo usuário curta a mesma postagem mais de uma vez.                                                                                                                          |
+| **Comentário** | Registra comentários feitos pelos usuários em uma postagem, armazenando o texto e a data/hora.             |
 
 
 **Verificar o database no banco G210!!!**

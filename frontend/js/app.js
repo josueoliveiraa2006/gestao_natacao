@@ -21,7 +21,25 @@ const pageTitle = document.getElementById('page-title');
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
   checkAuth();
+  carregarProvas();
 });
+
+// Carregar Provas do php
+async function carregarProvas() {
+  const resposta = await fetch('backend/provas.php');
+  const provas = await resposta.json();
+
+  const select = document.getElementById('insc-prova');
+
+  provas.forEach(prova => {
+    const option = document.createElement('option');
+
+    option.value = prova.id;
+    option.textContent = prova.nome;
+
+    select.appendChild(option);
+  });
+}
 
 function setupEventListeners() {
   // Login

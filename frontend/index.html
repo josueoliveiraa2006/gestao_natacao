@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Campeonatos de Natação</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ================= TELA DE LOGIN ================= -->
+  <div id="auth-view" class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">🏊‍♂️</div>
+        <h1>Portal Natação</h1>
+        <p>Sistema de Gestão de Campeonatos Oficiais</p>
+      </div>
+      <form id="form-login" class="auth-form">
+        <div id="login-alert" class="alert alert-danger hidden"></div>
+        
+        <div class="form-group">
+          <label for="login-username">Identificador / E-mail</label>
+          <input type="text" id="login-username" value="admin" required placeholder="Ex: admin ou seu e-mail">
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Senha de Acesso</label>
+          <input type="password" id="login-password" value="123456" required placeholder="Digite sua senha">
+        </div>
+
+        <div class="form-group">
+          <label for="login-role">Perfil de Acesso</label>
+          <select id="login-role">
+            <option value="Organizador">Organizador do Campeonato</option>
+            <option value="Árbitro Geral">Árbitro Oficial</option>
+            <option value="Técnico / Clube">Técnico ou Clube</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Acessar Sistema</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= APP PRINCIPAL ================= -->
+  <div id="app-view" class="app-container hidden">
+    
+    <!-- Sidebar de Navegação -->
+    <aside class="sidebar">
+      <div class="brand">
+        <span>🏊‍♂️</span>
+        <span>SwimManager</span>
+      </div>
+
+      <ul class="nav-links">
+        <li>
+          <a class="nav-link active" data-view="view-dashboard" data-title="Painel Geral">
+            <span>📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="view-pessoas" data-title="Gerenciamento de Pessoas">
+            <span>👥</span> Atletas & Árbitros
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="view-provas" data-title="Provas & Inscrições">
+            <span>🏊</span> Provas & Inscrições
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="view-resultados" data-title="Painel de Tempos & Pódio">
+            <span>⏱️</span> Tempos & Pódio (Inovador)
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="user-avatar">👤</div>
+          <div class="user-info">
+            <div id="logged-user-name" style="font-weight: 600;">Usuário</div>
+            <div id="logged-user-role" class="user-role">Organizador</div>
+          </div>
+        </div>
+        <button id="btn-logout" class="btn-logout">Sair da Conta</button>
+      </div>
+    </aside>
+
+    <!-- Área Principal de Conteúdo -->
+    <main class="main-content">
+      <header class="top-bar">
+        <h2 id="page-title" class="page-title">Painel Geral</h2>
+        <div class="top-actions">
+          <span class="badge badge-success">● Conexão Ativa</span>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <!-- === 1. VIEW DASHBOARD === -->
+        <section id="view-dashboard" class="view-section">
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-icon">🏊‍♂️</div>
+              <div class="kpi-details">
+                <h3 id="kpi-competidores">0</h3>
+                <p>Competidores Cadastrados</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">🏁</div>
+              <div class="kpi-details">
+                <h3 id="kpi-provas">0</h3>
+                <p>Provas Programadas</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">📝</div>
+              <div class="kpi-details">
+                <h3 id="kpi-inscricoes">0</h3>
+                <p>Inscrições Confirmadas</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Provas Recentes no Cronograma</h3>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Modalidade</th>
+                    <th>Data & Horário</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="table-recent-provas"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- === 2. VIEW GERENCIAMENTO DE PESSOAS === -->
+        <section id="view-pessoas" class="view-section hidden">
+          <div class="panel-card">
+            <div class="tabs">
+              <button class="tab-btn active" data-tab="tab-competidores">Competidores (Atletas)</button>
+              <button class="tab-btn" data-tab="tab-arbitros">Quadro de Árbitros</button>
+            </div>
+
+            <!-- Aba Competidores -->
+            <div id="tab-competidores" class="tab-content">
+              <div id="alert-competidor" class="alert hidden"></div>
+              
+              <form id="form-competidor" style="margin-bottom: 24px;">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="comp-matricula">Matrícula</label>
+                    <input type="text" id="comp-matricula" required placeholder="Ex: 20260011">
+                  </div>
+                  <div class="form-group">
+                    <label for="comp-nome">Nome Completo</label>
+                    <input type="text" id="comp-nome" required placeholder="Nome do atleta">
+                  </div>
+                  <div class="form-group">
+                    <label for="comp-sexo">Sexo</label>
+                    <select id="comp-sexo">
+                      <option value="M">Masculino</option>
+                      <option value="F">Feminino</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="comp-idade">Idade</label>
+                    <input type="number" id="comp-idade" required min="5" max="110" placeholder="Idade">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">+ Cadastrar Atleta</button>
+              </form>
+
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Matrícula</th>
+                      <th>Nome</th>
+                      <th>Sexo</th>
+                      <th>Idade</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-competidores-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Aba Árbitros -->
+            <div id="tab-arbitros" class="tab-content hidden">
+              <div id="alert-arbitro" class="alert hidden"></div>
+              
+              <form id="form-arbitro" style="margin-bottom: 24px;">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="arb-nome">Nome do Árbitro</label>
+                    <input type="text" id="arb-nome" required placeholder="Ex: Carlos Albuquerque">
+                  </div>
+                  <div class="form-group">
+                    <label for="arb-credencial">Número da Credencial</label>
+                    <input type="text" id="arb-credencial" required placeholder="Ex: ARB-CBDA-099">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">+ Cadastrar Árbitro</button>
+              </form>
+
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nome Oficial</th>
+                      <th>Registro / Credencial</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-arbitros-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- === 3. VIEW PROVAS & INSCRIÇÕES === -->
+        <section id="view-provas" class="view-section hidden">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Agendar Nova Prova</h3>
+            </div>
+            <div id="alert-prova" class="alert hidden"></div>
+            
+            <form id="form-prova">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="prova-nome">Nome da Modalidade/Prova</label>
+                  <input type="text" id="prova-nome" required placeholder="Ex: 100 metros Costas">
+                </div>
+                <div class="form-group">
+                  <label for="prova-datahora">Data e Horário</label>
+                  <input type="datetime-local" id="prova-datahora" required>
+                </div>
+                <div class="form-group">
+                  <label for="prova-local">Local da Competição</label>
+                  <select id="prova-local" required></select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="prova-arbitro">Árbitro Designado</label>
+                  <select id="prova-arbitro" required></select>
+                </div>
+                <div class="form-group">
+                  <label for="prova-categoria">Categoria Padrão</label>
+                  <select id="prova-categoria" required></select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">+ Salvar Prova</button>
+            </form>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Inscrição de Atleta em Prova</h3>
+            </div>
+            <div id="alert-inscricao" class="alert hidden"></div>
+
+            <form id="form-inscricao">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="insc-competidor">Competidor</label>
+                  <select id="insc-competidor" required></select>
+                </div>
+                <div class="form-group">
+                  <label for="insc-prova">Prova Alvo</label>
+                  <select id="insc-prova" required></select>
+                </div>
+                <div class="form-group">
+                  <label for="insc-categoria">Categoria</label>
+                  <select id="insc-categoria" required></select>
+                </div>
+                <div class="form-group">
+                  <label for="insc-tempo">Tempo Estimado / Balizamento</label>
+                  <input type="text" id="insc-tempo" placeholder="00:45:00">
+                  <div class="form-hint">Regra: Máximo 01:00:00</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="insc-obs">Observações</label>
+                <input type="text" id="insc-obs" placeholder="Ex: Raia 3, primeira competição">
+              </div>
+              <button type="submit" class="btn btn-primary">+ Confirmar Inscrição</button>
+            </form>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Lista Geral de Inscrições Ativas</h3>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Inscrição #</th>
+                    <th>Atleta</th>
+                    <th>Prova</th>
+                    <th>Tempo</th>
+                    <th>Observações</th>
+                  </tr>
+                </thead>
+                <tbody id="table-inscricoes-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- === 4. VIEW FUNCIONALIDADE INOVADORA (TEMPOS & PÓDIO) === -->
+        <section id="view-resultados" class="view-section hidden">
+          <div class="race-tracker">
+            <div class="race-tracker-header">
+              <div>
+                <h2>⏱️ Balizamento & Classificação Oficial</h2>
+                <p style="opacity: 0.85; font-size: 14px;">Lançamento de tempos em tempo real com apuração automática de pódio</p>
+              </div>
+              <div style="min-width: 250px;">
+                <label style="color: #fff;">Selecionar Prova:</label>
+                <select id="select-race-filter" style="background: rgba(255,255,255,0.9);"></select>
+              </div>
+            </div>
+
+            <!-- Pódio Visual Inovador -->
+            <div class="race-podium">
+              <div class="podium-card">
+                <div class="podium-rank rank-2">🥈 2º Lugar</div>
+                <p id="podium-2" style="font-size: 15px; margin-top: 6px;">--</p>
+              </div>
+              <div class="podium-card" style="border-color: #facc15; transform: scale(1.05);">
+                <div class="podium-rank rank-1">🥇 1º Lugar (Campeão)</div>
+                <p id="podium-1" style="font-size: 16px; font-weight: bold; margin-top: 6px;">--</p>
+              </div>
+              <div class="podium-card">
+                <div class="podium-rank rank-3">🥉 3º Lugar</div>
+                <p id="podium-3" style="font-size: 15px; margin-top: 6px;">--</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Lançamento Rápido de Tempos por Nadador</h3>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Classificação</th>
+                    <th>Atleta</th>
+                    <th>Matrícula</th>
+                    <th>Tempo Obtido</th>
+                    <th>Observações</th>
+                  </tr>
+                </thead>
+                <tbody id="table-results-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

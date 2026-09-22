@@ -62,6 +62,8 @@ A estrutura do banco de dados será composta pelas principais entidades relacion
 | **Comentário**  |Registra comentários feitos pelos usuários em uma postagem, armazenando o texto e a data/hora. |
 
 
+**Verificar o database no banco G210!!!**
+
 ## 🔗 Relacionamentos
 
 O modelo deverá representar os relacionamentos entre as entidades, permitindo, por exemplo:
@@ -73,7 +75,7 @@ O modelo deverá representar os relacionamentos entre as entidades, permitindo, 
 * Cada **prova** ocorre em um local específico;
 * O tempo obtido pelo competidor é registrado individualmente em sua inscrição.
 ## 📊 Diagrama do modelo de entidade relacionamento
-![alt text](assets/Flowcharts.png)
+![alt text](assets/diagramaERatual.png)
 
 ## 📚 Contexto Acadêmico
 

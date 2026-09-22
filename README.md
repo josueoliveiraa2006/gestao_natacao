@@ -53,6 +53,15 @@ A estrutura do banco de dados será composta pelas principais entidades relacion
 | **Árbitro**    | Responsável pela arbitragem das provas.                                                                    |
 | **Inscrição**  | Representa a participação de um competidor em determinada prova e categoria, armazenando também seu tempo. |
 
+| **Usuário**  | Representa os usuários do sistema que podem realizar interações sociais. |
+
+| **Postagem**  | Representa uma publicação feita por um usuário. |
+
+| **Curtida**  | Registra quando um usuário curte uma postagem, impedindo que o mesmo usuário curta a mesma postagem mais de uma vez. |
+
+| **Comentário**  |Registra comentários feitos pelos usuários em uma postagem, armazenando o texto e a data/hora. |
+
+
 ## 🔗 Relacionamentos
 
 O modelo deverá representar os relacionamentos entre as entidades, permitindo, por exemplo:

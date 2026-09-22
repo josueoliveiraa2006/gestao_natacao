@@ -75,7 +75,7 @@ O modelo deverá representar os relacionamentos entre as entidades, permitindo, 
 * Cada **prova** ocorre em um local específico;
 * O tempo obtido pelo competidor é registrado individualmente em sua inscrição.
 ## 📊 Diagrama do modelo de entidade relacionamento
-![alt text](assets/diagramaERatual.png)
+![alt text](assets/DiagramaERatual.png)
 
 ## 📚 Contexto Acadêmico
 
